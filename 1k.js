@@ -4,8 +4,9 @@
     // Declare constants and variables to help with minification
     var width = c.width = c.height = 400,
         circleOffset = 10,
-        diameter = width - 20,
+        diameter = 380,
         radius = diameter / 2,
+        radiusPlusOffset = radius + circleOffset,
         radiusSquared = radius * radius,
         two55 = 255,
         oneHundred = 100,
@@ -68,8 +69,8 @@
     function redraw(e) { 
         
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
-        currentX = e.pageX - c.offsetLeft - radius - circleOffset || currentX;
-        currentY = e.pageY - c.offsetTop - radius - circleOffset  || currentY;
+        currentX = e.pageX - c.offsetLeft - radiusPlusOffset || currentX;
+        currentY = e.pageY - c.offsetTop - radiusPlusOffset  || currentY;
         
         var theta = atan2(currentY, currentX),
             d = currentX * currentX + currentY * currentY;
@@ -101,7 +102,7 @@
         // Circle:
         a.beginPath();  
         a.strokeStyle = '#000';
-        a.arc(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset,4,0,PI2);
+        a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset,4,0,PI2);
         a.stroke();
         
         /*
