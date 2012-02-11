@@ -47,9 +47,7 @@
                     sqrt(d) / radius,               // Saturation
                     1                               // Value
                 );
-            if (x == 0 && y == 150) {
-                console.log("HERE", x, y, rgb, d, radiusSquared);
-            }
+
             // Print current color, but hide if outside the area of the circle
             pixels[wheelPixel++] = rgb[0];
             pixels[wheelPixel++] = rgb[1];
@@ -57,6 +55,8 @@
             pixels[wheelPixel++] = d <= radiusSquared ? two55 : 0;
         }
     }
+    
+    rx = ry = -80;
     
     // Bind Event Handlers
     c.onmousedown = doc.onmouseup = function(e) {
@@ -69,9 +69,10 @@
     function redraw(e) { 
         
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
-        var rx = (e.pageX - c.offsetLeft - radius - circleOffset || X),
-            ry = (e.pageY - c.offsetTop - radius - circleOffset  || Y),
-            theta = atan2(ry, rx),
+        rx = e.pageX - c.offsetLeft - radius - circleOffset || rx;
+        ry = e.pageY - c.offsetTop - radius - circleOffset  || ry;
+        
+        var theta = atan2(ry, rx),
             d = rx * rx + ry * ry;
         
         // If the x/y is not in the circle, find angle between center and mouse point:
@@ -90,35 +91,29 @@
             input.value / oneHundred    // current value
         )[3];
         
-        // Reset to color wheel
-        a.putImageData(imageData, 0, 0);
-        
-        
-        // Draw the spot for currentX and currentY.
-        X = ~~rx;
-        Y = ~~ry;
         
         //var rgb = a.getImageData(X + radius + circleOffset, Y + radius + circleOffset, 1, 1).data;
         //label.textContent = b.style.background = "rgb("+ rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
         
-        //console.log(X, Y)
-        //console.log("rgb("+ rgb[0] + "," + rgb[1] + "," + rgb[2] + ")")
+        // Reset to color wheel and draw a spot on the current location. 
+        a.putImageData(imageData, 0, 0);
         
+        // Could be a rectangle, circle, or heart shape.
+        // Circle:
+        a.beginPath();  
+        a.strokeStyle = '#000';
+        a.arc(~~rx+radius+circleOffset,~~ry+radius+circleOffset,4,0,PI2);
+        a.stroke();
+        
+        /*
         // Rectangle:
         //a.fillStyle = '#000';
         //a.fillRect(X - 5, Y - 5, 10, 10);
         
-        /*
         // Heart shape:
         a.font = "12px serif";
         a.fillText("♥", currentX, currentY);
         */
-        // Circle:
-        a.beginPath();  
-        a.strokeStyle = '#000';
-        a.arc(X+radius+circleOffset,Y+radius+circleOffset,4,0,PI2,true);
-        a.stroke();
-        
     }
     
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
