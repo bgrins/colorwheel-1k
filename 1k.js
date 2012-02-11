@@ -4,14 +4,14 @@
     // Declare constants and variables to help with minification
     var width = c.width = c.height = 400,
         circleOffset = 10,
-        diameter = 380,
+        diameter = width-circleOffset*2,
         radius = diameter / 2,
         radiusPlusOffset = radius + circleOffset,
         radiusSquared = radius * radius,
         two55 = 255,
         oneHundred = 100,
-        currentX = -80,
         currentY = 80,
+        currentX = -currentY,
         wheelPixel = circleOffset*4*width+circleOffset*4;
     
     // Math helpers
@@ -26,9 +26,9 @@
     var doc = document,
         imageData = a.createImageData(width, width),
         pixels = imageData.data,
-        label = createChild("p"),
-        input = createChild("input");
-    
+        label = b.appendChild(doc.createElement("p")),
+        input = b.appendChild(doc.createElement("input"));
+            
     // Setup DOM
     b.style.cssText="margin:0;text-align:center";
     label.style.cssText = "font:32px monospace;background:#fff;";
@@ -69,6 +69,7 @@
     function redraw(e) { 
         
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
+        // e.pageX 
         currentX = e.pageX - c.offsetLeft - radiusPlusOffset || currentX;
         currentY = e.pageY - c.offsetTop - radiusPlusOffset  || currentY;
         
@@ -91,10 +92,6 @@
             input.value / oneHundred    // current value
         )[3];
         
-        
-        //var rgb = a.getImageData(X + radius + circleOffset, Y + radius + circleOffset, 1, 1).data;
-        //label.textContent = b.style.background = "rgb("+ rgb[0] + "," + rgb[1] + "," + rgb[2] + ")";
-        
         // Reset to color wheel and draw a spot on the current location. 
         a.putImageData(imageData, 0, 0);
         
@@ -102,14 +99,16 @@
         // Circle:
         a.beginPath();  
         a.strokeStyle = '#000';
-        a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset,4,0,PI2);
+        a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 4, 0, PI2);
         a.stroke();
         
         /*
         // Rectangle:
-        //a.fillStyle = '#000';
-        //a.fillRect(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset, 10, 10);
+        a.fillStyle = '#000';
+        a.fillRect(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset, 6, 6);
+        */
         
+        /*
         // Heart shape:
         a.font = "12px serif";
         a.fillText("♥", ~~currentX+radius+circleOffset,~~currentY+radius+circleOffset);
@@ -133,19 +132,18 @@
         return [r, g, b, "rgb("+ ~~r + "," + ~~g + "," + ~~b + ")"];
     }
     
-    // Smallest reusable way I could think of for creating a child node.
-    function createChild(el) {
-      return b.appendChild(doc.createElement(el));
-    }
-    
     // Kick everything off
-    redraw(0);
+    //redraw(0);
     
+    currentX = currentY = 0;
     // Just an idea I had to kick everything off with some changing colors…
-    //var startX = -200;
-    //var startY = -200;
-    //var interval = setInterval(function() {
-    //    change({ pageX: startX++, pageY: startY++ })
-    //}, 1);
-
+    var interval = setInterval(function() {
+        currentX--;
+        currentY++;
+        redraw(0)
+    }, 7);
+    
+    setTimeout(function() {
+        clearInterval(interval)
+    }, 500)
 })();
