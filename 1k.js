@@ -57,8 +57,6 @@
         }
     }
     
-    rx = ry = -80;
-    
     // Bind Event Handlers
     c.onmousedown = doc.onmouseup = function(e) {
         // Unbind mousemove if this is a mouseup event, or bind mousemove if this a mousedown event
