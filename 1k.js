@@ -7,8 +7,10 @@
         diameter = width - 20,
         radius = diameter / 2,
         radiusSquared = radius * radius,
-        two55 = Y = 255,
-        oneHundred = X = 100,
+        two55 = 255,
+        oneHundred = 100,
+        currentX = -80,
+        currentY = 80,
         wheelPixel = circleOffset*4*width+circleOffset*4;
     
     // Math helpers
@@ -27,8 +29,7 @@
         input = createChild("input");
     
     // Setup DOM
-    b.style.margin = "0";
-    b.style.textAlign = "center";
+    b.style.cssText="margin:0;text-align:center";
     label.style.cssText = "font:32px monospace;background:#fff;";
     input.type = "range";
     input.min = 0;
@@ -69,20 +70,20 @@
     function redraw(e) { 
         
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
-        rx = e.pageX - c.offsetLeft - radius - circleOffset || rx;
-        ry = e.pageY - c.offsetTop - radius - circleOffset  || ry;
+        currentX = e.pageX - c.offsetLeft - radius - circleOffset || currentX;
+        currentY = e.pageY - c.offsetTop - radius - circleOffset  || currentY;
         
-        var theta = atan2(ry, rx),
-            d = rx * rx + ry * ry;
+        var theta = atan2(currentY, currentX),
+            d = currentX * currentX + currentY * currentY;
         
         // If the x/y is not in the circle, find angle between center and mouse point:
         //   Draw a line at that angle from center with the distance of radius
         //   Use that point on the circumference as the draggable location
         if (d >= radiusSquared) {
-            rx = radius * cos(theta);
-            ry = radius * cos(theta - PI/2); // Replaced math.sin(theta)
-            theta = atan2(ry, rx);
-            d = rx * rx + ry * ry;
+            currentX = radius * cos(theta);
+            currentY = radius * cos(theta - PI/2); // Replaced math.sin(theta)
+            theta = atan2(currentY, currentX);
+            d = currentX * currentX + currentY * currentY;
         }
         
         label.textContent = b.style.background = hsvToRgb(
@@ -102,17 +103,17 @@
         // Circle:
         a.beginPath();  
         a.strokeStyle = '#000';
-        a.arc(~~rx+radius+circleOffset,~~ry+radius+circleOffset,4,0,PI2);
+        a.arc(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset,4,0,PI2);
         a.stroke();
         
         /*
         // Rectangle:
         //a.fillStyle = '#000';
-        //a.fillRect(X - 5, Y - 5, 10, 10);
+        //a.fillRect(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset, 10, 10);
         
         // Heart shape:
         a.font = "12px serif";
-        a.fillText("♥", currentX, currentY);
+        a.fillText("♥", ~~currentX+radius+circleOffset,~~currentY+radius+circleOffset);
         */
     }
     
