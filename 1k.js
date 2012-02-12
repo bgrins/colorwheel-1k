@@ -34,11 +34,11 @@
     b.style.textAlign="center";
     label.style.font = "32px courier";
     input.type = "range";
-    input.min = 0;
+    //input.min = 0;  Moved to start of 'for' condition below to save space
     input.value = input.max = oneHundred;
     
     // Load color wheel data into memory.
-    for (y = 0; y < width; y++) {
+    for (y = input.min = 0; y < width; y++) {
         for (x = 0; x < width; x++) {
             var rx = x - radius,
                 ry = y - radius,
