@@ -35,7 +35,6 @@
     input.type = "range";
     input.min = 0;
     input.value = input.max = oneHundred;
-    
     // font:32px Consolas,Monaco,monospace; This looks a little nicer
     
     // Load color wheel data into memory.
@@ -69,7 +68,6 @@
     function redraw(e) { 
         
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
-        // e.pageX 
         currentX = e.pageX - c.offsetLeft - radiusPlusOffset || currentX;
         currentY = e.pageY - c.offsetTop - radiusPlusOffset  || currentY;
         
@@ -79,7 +77,7 @@
         // If the x/y is not in the circle, find angle between center and mouse point:
         //   Draw a line at that angle from center with the distance of radius
         //   Use that point on the circumference as the draggable location
-        if (d >= radiusSquared) {
+        if (d > radiusSquared) {
             currentX = radius * cos(theta);
             currentY = radius * cos(theta - PI/2); // Replaced math.sin(theta)
             theta = atan2(currentY, currentX);
@@ -96,23 +94,24 @@
         a.putImageData(imageData, 0, 0);
         
         // Could be a rectangle, circle, or heart shape.
+        
+        /*
         // Circle:
         a.beginPath();  
         a.strokeStyle = '#000';
         a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 4, 0, PI2);
-        //a.stroke();
-        
-        /*
-        // Rectangle:
-        a.fillStyle = '#000';
-        a.fillRect(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset, 6, 6);
+        a.stroke();
         */
         
+        // Rectangle:
+        a.fillStyle = '#000';
+        a.fillRect(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 6, 6);
         
+        /*
         // Heart shape:
         a.font = "14px serif";
-        a.fillText("♥", ~~currentX+radius+circleOffset-6,~~currentY+radius+circleOffset+2);
-        
+        a.fillText("♥", ~~currentX+radiusPlusOffset-6,~~currentY+radiusPlusOffset+2);
+        */
     }
     
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
@@ -133,8 +132,9 @@
     }
     
     // Kick everything off
-    //redraw(0);
+    redraw(0);
     
+    /*
     currentX = currentY = 1;
     // Just an idea I had to kick everything off with some changing colors…
     var interval = setInterval(function() {
@@ -145,5 +145,5 @@
     
     setTimeout(function() {
         clearInterval(interval)
-    }, 700)
+    }, 700)*/
 })();
