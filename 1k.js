@@ -4,17 +4,22 @@
     // Declare constants and variables to help with minification
     // Some of these are inlined (with comments to the side with the actual equation)
     var width = c.width = c.height = 400,
+        doc = document,
+        label = b.appendChild(doc.createElement("p")),
+        input = b.appendChild(doc.createElement("input")),
+        imageData = a.createImageData(width, width),
+        pixels = imageData.data,
+        oneHundred = input.value = input.max = 100,
         circleOffset = 10,
         diameter = 380,                  //width-circleOffset*2,
         radius = 190,                    //diameter / 2,
         radiusPlusOffset = 200,           //radius + circleOffset
         radiusSquared = radius * radius,
         two55 = 255,
-        oneHundred = 100,
         currentY = 80,
         currentX = -currentY,
         wheelPixel = 16040;              // circleOffset*4*width+circleOffset*4;
-        
+ 
     // Math helpers
     var math = Math,
         PI = math.PI,
@@ -23,19 +28,13 @@
         sqrt = math.sqrt,
         atan2 = math.atan2;
     
-    // DOM elements
-    var doc = document,
-        imageData = a.createImageData(width, width),
-        pixels = imageData.data,
-        label = b.appendChild(doc.createElement("p")),
-        input = b.appendChild(doc.createElement("input"));
-    
-    // Setup DOM
+    // Setup DOM properties
     b.style.textAlign="center";
     label.style.font = "32px courier";
     input.type = "range";
+    //input.value = input.max = oneHundred; Moved to top to save space
     //input.min = 0;  Moved to start of 'for' condition below to save space
-    input.value = input.max = oneHundred;
+    
     
     // Load color wheel data into memory.
     for (y = input.min = 0; y < width; y++) {
