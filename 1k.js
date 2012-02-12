@@ -30,8 +30,8 @@
         input = b.appendChild(doc.createElement("input"));
             
     // Setup DOM
-    b.style.cssText="margin:0;text-align:center";
-    label.style.cssText = "font:32px monospace;background:#fff;";
+    b.style.cssText="text-align:center";
+    label.style.cssText = "font:32px courier;"//background:#fff;";
     input.type = "range";
     input.min = 0;
     input.value = input.max = oneHundred;
@@ -116,10 +116,9 @@
     
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
     function hsvToRgb(h, s, v) {
-        h *= 6;
-        
-        var i = ~~h,
-            f = h - i,
+        var h6 = h * 6,
+            i = ~~h6,
+            f = h6 - i,
             p = v * (1 - s),
             q = v * (1 - f * s),
             t = v * (1 - (1 - f) * s),
