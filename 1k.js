@@ -16,7 +16,7 @@
         radiusPlusOffset = 200,          //radius + circleOffset
         radiusSquared = radius * radius,
         two55 = 255,
-        currentY = 80,
+        currentY = oneHundred,
         currentX = -currentY,
         wheelPixel = 16040;              // circleOffset*4*width+circleOffset*4;
  
@@ -24,17 +24,15 @@
     var math = Math,
         PI = math.PI,
         PI2 = PI * 2,
-        cos = math.cos,
         sqrt = math.sqrt,
         atan2 = math.atan2;
     
     // Setup DOM properties
     b.style.textAlign="center";
-    label.style.font = "3em courier";
+    label.style.font = "2em courier";
     input.type = "range";
     //input.value = input.max = oneHundred; Moved to top to save space
     //input.min = 0;  Moved to start of 'for' condition below to save space
-    
     
     // Load color wheel data into memory.
     for (y = input.min = 0; y < width; y++) {
@@ -57,19 +55,21 @@
     }
     
     // Bind Event Handlers
+    input.onchange = redraw;
     c.onmousedown = doc.onmouseup = function(e) {
         // Unbind mousemove if this is a mouseup event, or bind mousemove if this a mousedown event
         doc.onmousemove = /p/.test(e.type) ? 0 : (redraw(e), redraw);
     }
-    input.onchange = redraw;
 
     // Handle manual calls + mousemove event handler + input change event handler all in one place.
     function redraw(e) {
     
-        // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
+        // Only process an actual change if it is triggered by the mousemove or mousedown event.
+        // Otherwise e.pageX will be undefined, which will cause the result to be NaN, so it will fallback to the current value
         currentX = e.pageX - c.offsetLeft - radiusPlusOffset || currentX;
         currentY = e.pageY - c.offsetTop - radiusPlusOffset  || currentY;
         
+        // Scope these locally so the compiler will minify the names.  Will manually remove the 'var' keyword in the minified version.
         var theta = atan2(currentY, currentX),
             d = currentX * currentX + currentY * currentY;
         
@@ -77,23 +77,26 @@
         //   Draw a line at that angle from center with the distance of radius
         //   Use that point on the circumference as the draggable location
         if (d > radiusSquared) {
-            currentX = radius * cos(theta);
-            currentY = radius * cos(theta - PI/2); // Replaced math.sin(theta)
+            currentX = radius * math.cos(theta);
+            currentY = radius * math.sin(theta);
             theta = atan2(currentY, currentX);
             d = currentX * currentX + currentY * currentY;
         }
         
         label.textContent = b.style.background = hsvToRgb(
-            (theta + PI) / PI2,         // current hue
-            sqrt(d) / radius,           // current saturation 
-            input.value / oneHundred    // current value
+            (theta + PI) / PI2,         // Current hue (how many degrees along the circle)
+            sqrt(d) / radius,           // Current saturation (how close to the middle)
+            input.value / oneHundred    // Current value (input type="range" slider value)
         )[3];
         
         // Reset to color wheel and draw a spot on the current location. 
         a.putImageData(imageData, 0, 0);
         
-        // Could be a rectangle, circle, or heart shape.
-        
+        // Draw the current spot.
+        // I have tried a rectangle, circle, and heart shape.
+        // Rectangle:
+        a.fillStyle = '#000';
+        a.fillRect(currentX+radiusPlusOffset,currentY+radiusPlusOffset, 6, 6);
         /*
         // Circle:
         a.beginPath();  
@@ -101,11 +104,6 @@
         a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 4, 0, PI2);
         a.stroke();
         */
-        
-        // Rectangle:
-        a.fillStyle = '#000';
-        a.fillRect(currentX+radiusPlusOffset,currentY+radiusPlusOffset, 6, 6);
-        
         /*
         // Heart:
         a.font = "1em arial";
@@ -135,6 +133,7 @@
     
     /*
     // Just an idea I had to kick everything off with some changing colors…
+    // Probably no way to squeeze this into 1k, but it could probably be a lot smaller than this:
     currentX = currentY = 1;
     var interval = setInterval(function() {
         currentX--;
