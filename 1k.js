@@ -4,7 +4,7 @@
     // Declare constants and variables to help with minification
     var width = c.width = c.height = 400,
         circleOffset = 10,
-        diameter = width-circleOffset*2,
+        diameter = 380,    //width-circleOffset*2,
         radius = diameter / 2,
         radiusPlusOffset = radius + circleOffset,
         radiusSquared = radius * radius,
@@ -12,8 +12,8 @@
         oneHundred = 100,
         currentY = 80,
         currentX = -currentY,
-        wheelPixel = circleOffset*4*width+circleOffset*4;
-    
+        wheelPixel = 16040; // circleOffset*4*width+circleOffset*4;
+        
     // Math helpers
     var math = Math,
         PI = math.PI,
@@ -52,7 +52,7 @@
             pixels[wheelPixel++] = rgb[0];
             pixels[wheelPixel++] = rgb[1];
             pixels[wheelPixel++] = rgb[2];
-            pixels[wheelPixel++] = d <= radiusSquared ? two55 : 0;
+            pixels[wheelPixel++] = d > radiusSquared ? 0 : two55;
         }
     }
     
@@ -64,8 +64,8 @@
     input.onchange = redraw;
 
     // Handle manual calls + mousemove event handler + input change event handler all in one place.
-    function redraw(e) { 
-        
+    function redraw(e) {
+    
         // Only process an actual change if it is triggered by the mousemove event.  Otherwise just update UI.
         currentX = e.pageX - c.offsetLeft - radiusPlusOffset || currentX;
         currentY = e.pageY - c.offsetTop - radiusPlusOffset  || currentY;
@@ -144,5 +144,6 @@
     
     setTimeout(function() {
         clearInterval(interval)
-    }, 700)*/
+    }, 700)
+    */
 })();
