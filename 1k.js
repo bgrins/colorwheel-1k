@@ -28,14 +28,13 @@
         pixels = imageData.data,
         label = b.appendChild(doc.createElement("p")),
         input = b.appendChild(doc.createElement("input"));
-            
+    
     // Setup DOM
     b.style.textAlign="center";
-    label.style.cssText = "font:32px courier;"//background:#fff;";
+    label.style.font = "32px courier";
     input.type = "range";
     input.min = 0;
     input.value = input.max = oneHundred;
-    // font:32px Consolas,Monaco,monospace; This looks a little nicer
     
     // Load color wheel data into memory.
     for (y = 0; y < width; y++) {
@@ -108,12 +107,13 @@
         a.fillRect(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 6, 6);
         
         /*
-        // Heart shape:
+        // Heart:
         a.font = "14px serif";
         a.fillText("♥", ~~currentX+radiusPlusOffset-6,~~currentY+radiusPlusOffset+2);
         */
     }
     
+    // Created a shorter version of the HSV to RGB conversion function in TinyColor
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
     function hsvToRgb(h, s, v) {
         var h6 = h * 6,
@@ -126,7 +126,7 @@
             r = [v, q, p, p, t, v][mod] * two55,
             g = [t, v, v, q, p, p][mod] * two55,
             b = [p, p, t, v, v, q][mod] * two55;
-            
+        
         return [r, g, b, "rgb("+ ~~r + "," + ~~g + "," + ~~b + ")"];
     }
     
