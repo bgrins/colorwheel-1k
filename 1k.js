@@ -100,7 +100,7 @@
         a.beginPath();  
         a.strokeStyle = '#000';
         a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 4, 0, PI2);
-        a.stroke();
+        //a.stroke();
         
         /*
         // Rectangle:
@@ -108,11 +108,11 @@
         a.fillRect(~~currentX+radius+circleOffset,~~currentY+radius+circleOffset, 6, 6);
         */
         
-        /*
+        
         // Heart shape:
-        a.font = "12px serif";
-        a.fillText("♥", ~~currentX+radius+circleOffset,~~currentY+radius+circleOffset);
-        */
+        a.font = "14px serif";
+        a.fillText("♥", ~~currentX+radius+circleOffset-6,~~currentY+radius+circleOffset+2);
+        
     }
     
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
@@ -135,15 +135,15 @@
     // Kick everything off
     //redraw(0);
     
-    currentX = currentY = 0;
+    currentX = currentY = 1;
     // Just an idea I had to kick everything off with some changing colors…
     var interval = setInterval(function() {
         currentX--;
-        currentY++;
+        currentY*=1.05;
         redraw(0)
     }, 7);
     
     setTimeout(function() {
         clearInterval(interval)
-    }, 500)
+    }, 700)
 })();
