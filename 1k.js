@@ -2,17 +2,18 @@
 (function() {
 
     // Declare constants and variables to help with minification
+    // Some of these are inlined (with comments to the side with the actual equation)
     var width = c.width = c.height = 400,
         circleOffset = 10,
-        diameter = 380,    //width-circleOffset*2,
-        radius = diameter / 2,
-        radiusPlusOffset = radius + circleOffset,
+        diameter = 380,                  //width-circleOffset*2,
+        radius = 190,                    //diameter / 2,
+        radiusPlusOffset = 200,           //radius + circleOffset
         radiusSquared = radius * radius,
         two55 = 255,
         oneHundred = 100,
         currentY = 80,
         currentX = -currentY,
-        wheelPixel = 16040; // circleOffset*4*width+circleOffset*4;
+        wheelPixel = 16040;              // circleOffset*4*width+circleOffset*4;
         
     // Math helpers
     var math = Math,
@@ -104,7 +105,7 @@
         
         // Rectangle:
         a.fillStyle = '#000';
-        a.fillRect(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 6, 6);
+        a.fillRect(currentX+radiusPlusOffset,currentY+radiusPlusOffset, 6, 6);
         
         /*
         // Heart:
@@ -116,9 +117,9 @@
     // Created a shorter version of the HSV to RGB conversion function in TinyColor
     // https://github.com/bgrins/TinyColor/blob/master/tinycolor.js
     function hsvToRgb(h, s, v) {
-        var h6 = h * 6,
-            i = ~~h6,
-            f = h6 - i,
+        h*=6;
+        var i = ~~h,
+            f = h - i,
             p = v * (1 - s),
             q = v * (1 - f * s),
             t = v * (1 - (1 - f) * s),
