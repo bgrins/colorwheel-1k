@@ -1,8 +1,8 @@
-
 (function() {
 
     // Declare constants and variables to help with minification
     // Some of these are inlined (with comments to the side with the actual equation)
+    
     var width = c.width = c.height = 400,
         doc = document,
         label = b.appendChild(doc.createElement("p")),
@@ -13,7 +13,7 @@
         circleOffset = 10,
         diameter = 380,                  //width-circleOffset*2,
         radius = 190,                    //diameter / 2,
-        radiusPlusOffset = 200,           //radius + circleOffset
+        radiusPlusOffset = 200,          //radius + circleOffset
         radiusSquared = radius * radius,
         two55 = 255,
         currentY = 80,
@@ -30,7 +30,7 @@
     
     // Setup DOM properties
     b.style.textAlign="center";
-    label.style.font = "32px courier";
+    label.style.font = "3em courier";
     input.type = "range";
     //input.value = input.max = oneHundred; Moved to top to save space
     //input.min = 0;  Moved to start of 'for' condition below to save space
@@ -108,8 +108,8 @@
         
         /*
         // Heart:
-        a.font = "14px serif";
-        a.fillText("♥", ~~currentX+radiusPlusOffset-6,~~currentY+radiusPlusOffset+2);
+        a.font = "1em arial";
+        a.fillText("♥", currentX+radiusPlusOffset,currentY+radiusPlusOffset);
         */
     }
     
@@ -134,8 +134,8 @@
     redraw(0);
     
     /*
-    currentX = currentY = 1;
     // Just an idea I had to kick everything off with some changing colors…
+    currentX = currentY = 1;
     var interval = setInterval(function() {
         currentX--;
         currentY*=1.05;
@@ -146,4 +146,5 @@
         clearInterval(interval)
     }, 700)
     */
+    
 })();
