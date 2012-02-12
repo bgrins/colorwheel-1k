@@ -30,7 +30,7 @@
         input = b.appendChild(doc.createElement("input"));
             
     // Setup DOM
-    b.style.cssText="text-align:center";
+    b.style.textAlign="center";
     label.style.cssText = "font:32px courier;"//background:#fff;";
     input.type = "range";
     input.min = 0;
@@ -60,7 +60,7 @@
     // Bind Event Handlers
     c.onmousedown = doc.onmouseup = function(e) {
         // Unbind mousemove if this is a mouseup event, or bind mousemove if this a mousedown event
-        doc.onmousemove = (/p/.test(e.type)) ? 0 : (redraw(e), redraw);
+        doc.onmousemove = /p/.test(e.type) ? 0 : (redraw(e), redraw);
     }
     input.onchange = redraw;
 
