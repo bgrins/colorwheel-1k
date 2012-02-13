@@ -2,11 +2,11 @@
 
     // Declare constants and variables to help with minification
     // Some of these are inlined (with comments to the side with the actual equation)
-    
+    b.a = b.appendChild;
     var width = c.width = c.height = 400,
         doc = document,
-        label = b.appendChild(doc.createElement("p")),
-        input = b.appendChild(doc.createElement("input")),
+        label = b.a(doc.createElement("p")),
+        input = b.a(doc.createElement("input")),
         imageData = a.createImageData(width, width),
         pixels = imageData.data,
         oneHundred = input.value = input.max = 100,
@@ -31,8 +31,6 @@
     b.style.textAlign="center";
     label.style.font = "2em courier";
     input.type = "range";
-    //input.value = input.max = oneHundred; Moved to top to save space
-    //input.min = 0;  Moved to start of 'for' condition below to save space
     
     // Load color wheel data into memory.
     for (y = input.min = 0; y < width; y++) {
