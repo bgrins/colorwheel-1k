@@ -94,9 +94,11 @@
         
         // Draw the current spot.
         // I have tried a rectangle, circle, and heart shape.
+        /*
         // Rectangle:
         a.fillStyle = '#000';
         a.fillRect(currentX+radiusPlusOffset,currentY+radiusPlusOffset, 6, 6);
+        */
         /*
         // Circle:
         a.beginPath();  
@@ -104,11 +106,11 @@
         a.arc(~~currentX+radiusPlusOffset,~~currentY+radiusPlusOffset, 4, 0, PI2);
         a.stroke();
         */
-        /*
+        
         // Heart:
         a.font = "1em arial";
-        a.fillText("♥", currentX+radiusPlusOffset,currentY+radiusPlusOffset);
-        */
+        a.fillText("♥", currentX+radiusPlusOffset-4,currentY+radiusPlusOffset+4);
+        
     }
     
     // Created a shorter version of the HSV to RGB conversion function in TinyColor
