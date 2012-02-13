@@ -2,11 +2,13 @@
 
     // Declare constants and variables to help with minification
     // Some of these are inlined (with comments to the side with the actual equation)
+    var doc = document;
+    doc.c = doc.createElement;
     b.a = b.appendChild;
+    
     var width = c.width = c.height = 400,
-        doc = document,
-        label = b.a(doc.createElement("p")),
-        input = b.a(doc.createElement("input")),
+        label = b.a(doc.c("p")),
+        input = b.a(doc.c("input")),
         imageData = a.createImageData(width, width),
         pixels = imageData.data,
         oneHundred = input.value = input.max = 100,
